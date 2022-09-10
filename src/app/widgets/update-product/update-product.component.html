@@ -1,0 +1,60 @@
+<ion-card class="ion-no-margin">
+  <ion-card-header>
+    <ion-card-title color="primary">{{mode==='create'?'Create':'Update'}} Product</ion-card-title>
+    <ion-card-subtitle color="secondary">Please provide below details to {{mode==='create'?'create':'update'}} product
+    </ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-row>
+      <ion-col>
+        <form [formGroup]="productForm" style="width: 300px;" (ngSubmit)="submit()">
+          <ion-item>
+            <ion-label position="floating">Name</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+          </ion-item>
+          <ion-row class="error-message">
+            <ion-col>
+              <ion-row *ngIf="productForm.controls.name.errors?.required&&productForm.controls.name.touched"
+                color="danger">It is required to enter the product name</ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-item>
+            <ion-label position="floating">Price</ion-label>
+            <ion-input type="number" formControlName="price"></ion-input>
+          </ion-item>
+          <ion-row class="error-message">
+            <ion-col>
+              <ion-row *ngIf="productForm.controls.price.errors?.required&&productForm.controls.price.touched"
+                color="danger">It is required to enter the product price</ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-item>
+            <ion-label position="floating">Image Url</ion-label>
+            <ion-input type="text" formControlName="image"></ion-input>
+          </ion-item>
+          <ion-row class="error-message">
+            <ion-col>
+              <ion-row *ngIf="productForm.controls.image.errors?.required&&productForm.controls.image.touched"
+                color="danger">It is required to enter the valid product image Url</ion-row>
+                <ion-row *ngIf="productForm.controls.image.errors?.imageError&&productForm.controls.image.touched"
+                color="danger">Please provide valid image</ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-button type="submit" >
+            <ion-icon slot="start" name="save"></ion-icon>
+            <ion-label class="ion-text-capitalize">Save</ion-label>
+          </ion-button>
+        </form>
+      </ion-col>
+      <ion-col>
+        <ion-text color="secondary">Image Preview</ion-text>
+        <div id="image-container">
+          <ion-img (ionError)="ionError()" (ionImgDidLoad)="ionImgDidLoad()" [src]="productForm.value.image"></ion-img>
+          <div class="cover" *ngIf="imgError">
+            <ion-text color="danger">Invalid Image</ion-text>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>

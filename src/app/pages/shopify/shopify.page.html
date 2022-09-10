@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title routerLink="/shopify/shop" size="large">Shopify</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/shopify/favorites">
+        <ion-icon slot="start" name="heart"></ion-icon>
+        <ion-label class="ion-text-capitalize">Favorites</ion-label>
+      </ion-button>
+      <ion-button routerLink="/shopify/cart">
+        <ion-icon slot="start" name="cart"></ion-icon>
+        <ion-label class="ion-text-capitalize">Cart</ion-label>
+      </ion-button>
+      <ion-button routerLink="/shopify/orders">
+        <ion-icon slot="start" name="bag"></ion-icon>
+        <ion-label class="ion-text-capitalize">Orders</ion-label>
+      </ion-button>
+      <ion-button (click)="logout()">
+        <ion-icon slot="start" name="log-out"></ion-icon>
+        <ion-label class="ion-text-capitalize">Log out</ion-label>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content >
+ <ion-router-outlet></ion-router-outlet>
+</ion-content>

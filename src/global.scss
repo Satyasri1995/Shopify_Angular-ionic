@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -24,3 +24,46 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.head {
+  height: 5rem !important;
+}
+
+.primary {
+  background-color: var(--ion-color-primary);
+  color: var(--ion-color-primary-contrast);
+}
+
+.fill {
+  height: -webkit-fill-available !important;
+}
+
+@keyframes backgroundSpin {
+  0% {
+    background-color: var(--ion-color-primary);
+  }
+  25%{
+    background-color: var(--ion-color-secondary);
+  }
+  50% {
+    background-color: var(--ion-color-tertiary);
+  }
+  75%{
+    background-color: var(--ion-color-secondary);
+  }
+  100%{
+    background-color: var(--ion-color-primary);
+  }
+}
+
+.background {
+  background-color: var(--ion-color-primary);
+  animation: backgroundSpin 20s infinite ease;
+}
+
+.error-message{
+  & ion-row{
+    font-size:10px;
+    color: var(--ion-color-danger);
+  }
+}
