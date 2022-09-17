@@ -2,7 +2,7 @@ import { IProduct } from './product';
 
 export interface ICart{
   id:string;
-  items:{
+  products:{
     id:string,
     product:IProduct|string,
     quantity:number
@@ -13,7 +13,7 @@ export interface ICart{
 
 export class Cart implements ICart{
   id:string;
-  items:{
+  products:{
     id:string,
     product:IProduct|string,
     quantity:number
@@ -22,7 +22,7 @@ export class Cart implements ICart{
   updatedAt:Date;
   constructor(data?:ICart){
     this.id=data?.id||"";
-    this.items=data?.items||[];
+    this.products=data?.products||[];
     this.createdAt=data?.createdAt;
     this.updatedAt=data?.updatedAt;
   }

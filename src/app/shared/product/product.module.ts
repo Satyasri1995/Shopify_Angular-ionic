@@ -14,6 +14,6 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     IonicModule.forRoot()
   ],
-  exports:[ProductComponent]
+  exports:[ProductComponent,UpdateProductComponent]
 })
 export class ProductModule { }

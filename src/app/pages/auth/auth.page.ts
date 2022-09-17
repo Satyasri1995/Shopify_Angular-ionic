@@ -1,18 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { SignIn, SignUp } from './../../store/actions';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.page.html',
   styleUrls: ['./auth.page.scss'],
 })
-export class AuthPage implements OnInit {
+export class AuthPage implements OnInit, OnDestroy {
   isSignIn: boolean;
   loginForm: FormGroup;
   signupForm: FormGroup;
-  loading:boolean=false;
+  loading: boolean = false;
+  paramSub: Subscription;
   constructor(
     private readonly fb: FormBuilder,
+    private readonly activeRoute: ActivatedRoute,
+    private readonly store:Store
   ) {
     this.isSignIn = true;
   }
@@ -24,7 +31,7 @@ export class AuthPage implements OnInit {
         [
           Validators.required,
           Validators.email,
-          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'),
         ],
       ],
       password: [
@@ -44,7 +51,7 @@ export class AuthPage implements OnInit {
           [
             Validators.required,
             Validators.email,
-            Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')
+            Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'),
           ],
         ],
         name: ['', [Validators.required]],
@@ -58,11 +65,15 @@ export class AuthPage implements OnInit {
           ],
         ],
         confirmPassword: ['', [Validators.required]],
+        isAdmin: [false, [Validators.required]],
       },
       {
         validator: this.confirmedValidator('password', 'confirmPassword'),
       }
     );
+    this.paramSub = this.activeRoute.params.subscribe((params) => {
+      this.isSignIn = params.type === 'signin';
+    });
   }
 
   confirmedValidator(controlName: string, matchingControlName: string) {
@@ -83,15 +94,17 @@ export class AuthPage implements OnInit {
     };
   }
 
-  toggleSignIn() {
-    this.isSignIn = !this.isSignIn;
-  }
-
   doSignIn() {
-
+    const {mail,password} = this.signupForm.value;
+    this.store.dispatch(SignIn({mail,password}));
   }
 
   doSignup() {
+    const {mail,password,isAdmin} = this.signupForm.value;
+    this.store.dispatch(SignUp({mail,password,isAdmin}));
+  }
 
+  ngOnDestroy(): void {
+    this.paramSub?.unsubscribe();
   }
 }

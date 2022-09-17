@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'auth',
+    redirectTo: 'auth/signin',
     pathMatch: 'full'
   },
   {
@@ -12,7 +12,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/shopify/shopify.module').then( m => m.ShopifyPageModule)
   },
   {
-    path: 'auth',
+    path: 'auth/:type',
     loadChildren: () => import('./pages/auth/auth.module').then( m => m.AuthPageModule)
   }
 ];

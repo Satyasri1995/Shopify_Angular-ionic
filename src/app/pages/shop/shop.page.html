@@ -1,8 +1,20 @@
 <ion-content>
-  <ion-row class="ion-align-items-center head primary">
+  <ion-row class="ion-align-items-center ion-justify-content-between head primary">
     <ion-title>Shopping Products</ion-title>
+    <ion-buttons class="ion-padding-end">
+      <ion-button id="addProduct" (click)="createProduct()">
+        <ion-icon slot="start" name="add"></ion-icon>
+        <ion-label class="ion-text-capitalize">Add Product</ion-label>
+      </ion-button>
+    </ion-buttons>
   </ion-row>
   <ion-row class="ion-padding">
-    <app-product mode="admin"></app-product>
+    <app-product *ngFor="let product of products$|async" [product]="product" mode="admin"></app-product>
   </ion-row>
 </ion-content>
+
+<ion-modal id="productModal2" #modal trigger="addProduct" class="productModal">
+  <ng-template>
+    <app-update-product></app-update-product>
+  </ng-template>
+</ion-modal>

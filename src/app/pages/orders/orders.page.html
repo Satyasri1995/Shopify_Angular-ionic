@@ -3,6 +3,10 @@
     <ion-title>Ordered Products</ion-title>
   </ion-row>
   <ion-row class="ion-padding">
-    <app-product mode="orders"></app-product>
+    <app-product *ngFor="let orderitem of (order|async).products"
+    [quantity]="orderitem.quantity"
+
+     mode="orders">
+    </app-product>
   </ion-row>
 </ion-content>

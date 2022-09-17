@@ -1,3 +1,8 @@
+import { AppState } from 'src/app/store/reducer';
+import { OrderStateSelector } from './../../store/selectors';
+import { Store } from '@ngrx/store';
+import { IOrder } from './../../models/order';
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +12,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrdersPage implements OnInit {
 
-  constructor() { }
+  order:Observable<IOrder>;
+
+  constructor(private readonly store:Store<AppState>) { }
 
   ngOnInit() {
+    this.order = this.store.select(state=>OrderStateSelector(state));
   }
 
 }
