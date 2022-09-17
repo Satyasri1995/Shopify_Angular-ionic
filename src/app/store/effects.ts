@@ -1,3 +1,4 @@
+import { Favorite } from './../models/favorite';
 import { IOrder } from './../models/order';
 import { User } from './../models/user';
 import { environment } from './../../environments/environment';
@@ -17,6 +18,13 @@ import {
   SetOrder,
   CancelOrder,
   LoadFavorites,
+  SetFavorite,
+  AddFavorite,
+  RemoveFromFavorite,
+  SetCart,
+  LoadCart,
+  AddCart,
+  RemoveFromCart,
 } from './actions';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -27,6 +35,7 @@ import { Router } from '@angular/router';
 import { Product } from '../models/product';
 import { of } from 'rxjs';
 import { Order } from '../models/order';
+import { Cart } from '../models/cart';
 
 @Injectable()
 export class AppEffects {
@@ -204,36 +213,164 @@ export class AppEffects {
     );
   });
 
-  cancelOrder$ = createEffect(()=>{
+  cancelOrder$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(CancelOrder),
-      switchMap((payload)=>{
+      switchMap((payload) => {
         const user = payload.userId;
         const cart = payload.cartId;
         const product = payload.productId;
-        return this.http.post(environment.api+"orders/remove",{user,cart,product}).pipe(
-          mergeMap((response:any)=>{
-            return [
-              Toast({header:'Order',message:response.data,severity:'success'}),
-              LoadOrder({userId:user})
-            ]
-          })
-        )
+        return this.http
+          .post(environment.api + 'orders/remove', { user, cart, product })
+          .pipe(
+            mergeMap((response: any) => {
+              return [
+                Toast({
+                  header: 'Order',
+                  message: response.data,
+                  severity: 'success',
+                }),
+                LoadOrder({ userId: user }),
+              ];
+            })
+          );
       })
-    )
-  })
+    );
+  });
 
   //#endregion
 
   //#region favorites
 
-  loadFavorites$ = createEffect(()=>{
+  loadFavorites$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(LoadFavorites)
-    )
-  })
+      ofType(LoadFavorites),
+      switchMap((payload) => {
+        return this.http
+          .get(environment.api + `wishlist/fethWishlist/${payload.userId}`)
+          .pipe(
+            mergeMap((response: any) => {
+              return [SetFavorite({ favorite: new Favorite(response.data) })];
+            })
+          );
+      })
+    );
+  });
 
+  addFavorite$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AddFavorite),
+      switchMap((payload) => {
+        const user = payload.userId;
+        const product = payload.productId;
+        return this.http
+          .post(environment.api + 'wishlist/add', { user, product })
+          .pipe(
+            mergeMap((response: any) => {
+              return [
+                Toast({
+                  header: 'favorite',
+                  message: response.data,
+                  severity: 'success',
+                }),
+                LoadFavorites({ userId: payload.userId }),
+              ];
+            })
+          );
+      })
+    );
+  });
 
+  removeFavorite = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(RemoveFromFavorite),
+      switchMap((payload) => {
+        const user = payload.userId;
+        const product = payload.productId;
+        return this.http
+          .post(environment.api + 'wishlist/remove', { user, product })
+          .pipe(
+            mergeMap((response: any) => {
+              return [
+                Toast({
+                  header: 'favorite',
+                  message: response.data,
+                  severity: 'success',
+                }),
+                LoadFavorites({ userId: payload.userId }),
+              ];
+            })
+          );
+      })
+    );
+  });
+
+  //#endregion
+
+  //#region cart
+
+  loadCart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LoadCart),
+      switchMap((payload) => {
+        return this.http
+          .get(environment.api + `cart/fetchCart/${payload.userId}`)
+          .pipe(
+            mergeMap((response: any) => {
+              return [SetCart({ cart: new Cart(response.data) })];
+            })
+          );
+      })
+    );
+  });
+
+  addCart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(AddCart),
+      switchMap((payload) => {
+        const user = payload.userId;
+        const product = payload.productId;
+        return this.http
+          .post(environment.api + 'cart/add', { user, product })
+          .pipe(
+            mergeMap((response: any) => {
+              return [
+                Toast({
+                  header: 'cart',
+                  message: response.data,
+                  severity: 'success',
+                }),
+                LoadCart({ userId: payload.userId }),
+              ];
+            })
+          );
+      })
+    );
+  });
+
+  removeCart$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(RemoveFromCart),
+      switchMap((payload) => {
+        const user = payload.userId;
+        const product = payload.productId;
+        return this.http
+          .post(environment.api + 'cart/remove', { user, product })
+          .pipe(
+            mergeMap((response: any) => {
+              return [
+                Toast({
+                  header: 'favorite',
+                  message: response.data,
+                  severity: 'success',
+                }),
+                LoadCart({ userId: payload.userId }),
+              ];
+            })
+          );
+      })
+    );
+  });
 
   //#endregion
 

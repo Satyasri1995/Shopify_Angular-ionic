@@ -4,7 +4,7 @@ import { IOrder, Order } from './../models/order';
 import { ActionReducerMap, createReducer, on } from '@ngrx/store';
 import { Cart, ICart } from '../models/cart';
 import { User } from '../models/user';
-import { SetUser, SetProducts, SelectProduct, ClearProduct, SetOrder } from './actions';
+import { SetUser, SetProducts, SelectProduct, ClearProduct, SetOrder, SetCart, SetFavorite } from './actions';
 import { IProduct, Product } from '../models/product';
 
 const initialState = {
@@ -57,6 +57,18 @@ export const ShopReducer = createReducer(
     return {
       ...state,
       orders:payload.order
+    }
+  }),
+  on(SetCart,(state,payload)=>{
+    return {
+      ...state,
+      cart:payload.cart
+    }
+  }),
+  on(SetFavorite,(state,payload)=>{
+    return {
+      ...state,
+      favorite:payload.favorite
     }
   })
 );

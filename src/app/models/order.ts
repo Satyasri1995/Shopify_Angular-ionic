@@ -3,7 +3,7 @@ import { IProduct } from './product';
 export interface IOrder{
   id:string;
   products:{
-    product:IProduct|string,
+    product:IProduct,
     quantity:number,
   }[];
   price:number
@@ -14,7 +14,7 @@ export interface IOrder{
 export class Order implements IOrder{
   id:string;
   products:{
-    product:IProduct|string,
+    product:IProduct,
     quantity:number,
   }[];
   price:number

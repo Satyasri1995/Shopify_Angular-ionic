@@ -1,4 +1,9 @@
+import { CartStateSelector } from './../../store/selectors';
+import { ICart } from './../../models/cart';
 import { Component, OnInit } from '@angular/core';
+import { AppState } from 'src/app/store/reducer';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -7,9 +12,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartPage implements OnInit {
 
-  constructor() { }
+  cart:Observable<ICart>;
+
+  constructor(private readonly store:Store<AppState>) { }
 
   ngOnInit() {
+    this.cart = this.store.select(state=>CartStateSelector(state));
   }
 
 }

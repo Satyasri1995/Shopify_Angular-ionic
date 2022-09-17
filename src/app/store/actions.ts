@@ -1,3 +1,5 @@
+import { ICart } from './../models/cart';
+import { IFavorite } from './../models/favorite';
 import { IOrder } from './../models/order';
 import { IUser } from './../models/user';
 import { createAction, props } from '@ngrx/store';
@@ -81,5 +83,40 @@ export const SetOrder = createAction(
 
 export const LoadFavorites = createAction(
   '[favorites] load favorites',
-  props<{userId:string}>()
-)
+  props<{ userId: string }>()
+);
+
+export const SetFavorite = createAction(
+  '[favorites] set the favorites in state',
+  props<{ favorite: IFavorite }>()
+);
+
+export const RemoveFromFavorite = createAction(
+  '[favorite] removes from favorites',
+  props<{ userId: string; productId: string }>()
+);
+
+export const AddFavorite = createAction(
+  '[favorite] adds to favorites',
+  props<{ userId: string; productId: string }>()
+);
+
+export const LoadCart = createAction(
+  '[cart] load the cart items',
+  props<{ userId: string }>()
+);
+
+export const SetCart = createAction(
+  '[cart] sets the cart in state',
+  props<{ cart: ICart }>()
+);
+
+export const RemoveFromCart = createAction(
+  '[cart] removes item from cart',
+  props<{ userId: string; productId: string }>()
+);
+
+export const AddCart = createAction(
+  '[cart] adds item to cart',
+  props<{ userId: string; productId: string }>()
+);

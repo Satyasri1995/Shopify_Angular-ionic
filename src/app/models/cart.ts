@@ -4,7 +4,7 @@ export interface ICart{
   id:string;
   products:{
     id:string,
-    product:IProduct|string,
+    product:IProduct,
     quantity:number
   }[],
   createdAt:Date;
@@ -15,7 +15,7 @@ export class Cart implements ICart{
   id:string;
   products:{
     id:string,
-    product:IProduct|string,
+    product:IProduct,
     quantity:number
   }[];
   createdAt:Date;

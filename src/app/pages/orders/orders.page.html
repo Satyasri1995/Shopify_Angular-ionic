@@ -4,8 +4,7 @@
   </ion-row>
   <ion-row class="ion-padding">
     <app-product *ngFor="let orderitem of (order|async).products"
-    [quantity]="orderitem.quantity"
-
+    [quantity]="orderitem.quantity" [product]="orderitem.product"
      mode="orders">
     </app-product>
   </ion-row>

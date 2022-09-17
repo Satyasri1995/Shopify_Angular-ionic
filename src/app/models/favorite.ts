@@ -1,9 +1,9 @@
 import { IProduct } from './product';
 export interface IFavorite{
   id:string;
-  items:{
+  products:{
     id:string,
-    product:string|IProduct,
+    product:IProduct,
   }[];
   createdAt:Date;
   updatedAt:Date;
@@ -11,15 +11,15 @@ export interface IFavorite{
 
 export class Favorite implements IFavorite{
   id:string;
-  items:{
+  products:{
     id:string,
-    product:string|IProduct,
+    product:IProduct,
   }[];
   createdAt:Date;
   updatedAt:Date;
   constructor(data?:IFavorite){
     this.id=data?.id||"";
-    this.items=data?.items||[];
+    this.products=data?.products||[];
     this.createdAt=data?.createdAt;
     this.updatedAt=data?.updatedAt;
   }

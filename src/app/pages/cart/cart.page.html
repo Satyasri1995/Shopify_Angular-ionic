@@ -3,6 +3,9 @@
     <ion-title>Shopping Cart</ion-title>
   </ion-row>
   <ion-row class="ion-padding">
-    <app-product mode="cart"></app-product>
+    <app-product *ngFor="let cartitem of (cart|async).products"
+    [quantity]="cartitem.quantity"
+     mode="cart">
+    </app-product>
   </ion-row>
 </ion-content>
