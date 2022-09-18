@@ -9,7 +9,8 @@
     </ion-buttons>
   </ion-row>
   <ion-row class="ion-padding">
-    <app-product *ngFor="let product of products$|async" [product]="product" mode="admin"></app-product>
+    <!-- <app-product *ngFor="let product of products$|async" [product]="product" mode="admin"></app-product> -->
+    <app-product *ngFor="let product of products$|async" [product]="product" [mode]="(isAdmin$|async)?'admin':'shop'"></app-product>
   </ion-row>
 </ion-content>
 

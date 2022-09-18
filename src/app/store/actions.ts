@@ -12,7 +12,7 @@ export const SignIn = createAction(
 
 export const SignUp = createAction(
   '[auth] user signup',
-  props<{ mail: string; password: string; isAdmin: boolean }>()
+  props<{ mail: string; password: string,confirmPassword:string, isAdmin: boolean }>()
 );
 
 export const RedirectTo = createAction(

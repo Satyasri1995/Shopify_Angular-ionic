@@ -19,56 +19,29 @@
         </ion-card-subtitle>
       </ion-col>
     </ion-row>
-    <ion-row class="ion-justify-content-between" *ngIf="mode==='admin'">
-      <ion-button size="small" color="warning" id="editProduct" (click)="updateProduct()">
-        <ion-icon name="create" slot="start"></ion-icon>
-        <ion-label class="ion-text-capitalize">Edit</ion-label>
+    <ion-buttons>
+      <!-- shop and favorites -->
+      <ion-button *ngIf="mode==='shop'||mode==='favorites'">
+        <ion-icon name="cart" slot="icon-only"></ion-icon>
       </ion-button>
-      <ion-button size="small" color="danger" (click)="deleteProduct()">
-        <ion-icon name="trash" slot="start"></ion-icon>
-        <ion-label class="ion-text-capitalize">Delete</ion-label>
+      <ion-button *ngIf="mode==='shop'||mode==='favorites'">
+        <ion-icon name="heart" slot="icon-only"></ion-icon>
       </ion-button>
-    </ion-row>
-    <ion-row class="ion-justify-content-between" *ngIf="mode==='favorites'">
-      <ion-button size="small" color="primary">
-        <ion-icon name="add" slot="start"></ion-icon>
-        <ion-label class="ion-text-capitalize">Add</ion-label>
+      <!-- admin -->
+      <ion-button *ngIf="mode==='admin'">
+        <ion-icon name="trash" slot="icon-only"></ion-icon>
       </ion-button>
-      <ion-button size="small" color="tertiary">
-        <ion-icon name="remove" slot="start"></ion-icon>
-        <ion-label class="ion-text-capitalize">Remove</ion-label>
+      <ion-button *ngIf="mode==='admin'">
+        <ion-icon name="create" slot="icon-only"></ion-icon>
       </ion-button>
-    </ion-row>
-    <ion-row class="ion-justify-content-between" *ngIf="mode==='shop'">
-      <ion-button size="small" color="primary">
-        <ion-icon name="cart" slot="start"></ion-icon>
-        <ion-label class="ion-text-capitalize">Cart</ion-label>
+      <!-- cart and orders -->
+      <ion-button *ngIf="mode==='cart'||mode==='orders'">
+        <ion-icon name="cube" slot="icon-only"></ion-icon>
       </ion-button>
-      <ion-button size="small" color="tertiary">
-        <ion-icon name="heart" slot="start"></ion-icon>
-        <ion-label class="ion-text-capitalize">Favorites</ion-label>
+      <ion-button *ngIf="mode==='cart'||mode==='orders'">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
       </ion-button>
-    </ion-row>
-    <ion-row class="ion-justify-content-between" *ngIf="mode==='orders'">
-      <ion-button size="small" color="primary">
-        <ion-icon name="repeat" slot="start"></ion-icon>
-        <ion-label class="ion-text-capitalize">Re-Order</ion-label>
-      </ion-button>
-      <ion-button size="small" color="tertiary" (click)="cancelOrder()">
-        <ion-icon name="close" slot="start"></ion-icon>
-        <ion-label class="ion-text-capitalize">Cancel Order</ion-label>
-      </ion-button>
-    </ion-row>
-    <ion-row class="ion-justify-content-between" *ngIf="mode==='cart'">
-      <ion-button size="small" color="primary">
-        <ion-icon name="cube" slot="start"></ion-icon>
-        <ion-label class="ion-text-capitalize">Order</ion-label>
-      </ion-button>
-      <ion-button size="small" color="tertiary">
-        <ion-icon name="trash" slot="start"></ion-icon>
-        <ion-label class="ion-text-capitalize">Delete</ion-label>
-      </ion-button>
-    </ion-row>
+    </ion-buttons>
   </ion-card-content>
 </ion-card>
 

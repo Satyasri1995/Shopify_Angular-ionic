@@ -1,3 +1,4 @@
+import { IUser } from './../models/user';
 import { createSelector } from '@ngrx/store';
 import { AppState, ShopState } from './reducer';
 
@@ -31,4 +32,14 @@ export const CartStateSelector = createSelector(
 export const FavoriteStateSelector = createSelector(
   ShopSelector,
   (state: ShopState) => state.favorite
+);
+
+export const UserSelector = createSelector(
+  ShopSelector,
+  (state: ShopState) => state.user
+);
+
+export const IsAdminSelector = createSelector(
+  UserSelector,
+  (state: IUser) => state.isAdmin
 );

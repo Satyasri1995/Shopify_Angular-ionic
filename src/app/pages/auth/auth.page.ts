@@ -95,13 +95,13 @@ export class AuthPage implements OnInit, OnDestroy {
   }
 
   doSignIn() {
-    const {mail,password} = this.signupForm.value;
+    const {mail,password} = this.loginForm.value;
     this.store.dispatch(SignIn({mail,password}));
   }
 
   doSignup() {
-    const {mail,password,isAdmin} = this.signupForm.value;
-    this.store.dispatch(SignUp({mail,password,isAdmin}));
+    const {mail,password,confirmPassword,isAdmin} = this.signupForm.value;
+    this.store.dispatch(SignUp({mail,password,confirmPassword,isAdmin}));
   }
 
   ngOnDestroy(): void {

@@ -1,3 +1,4 @@
+import { AuthGuard } from './guards/auth.guard';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
@@ -9,6 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'shopify',
+    canActivate:[AuthGuard],
     loadChildren: () => import('./pages/shopify/shopify.module').then( m => m.ShopifyPageModule)
   },
   {
