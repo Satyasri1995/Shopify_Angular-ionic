@@ -14,7 +14,8 @@ import { LoadingController } from '@ionic/angular';
   providedIn: 'root',
 })
 export class InterceptorService implements HttpInterceptor {
-  constructor(private readonly loading:LoadingController) {}
+  constructor(private readonly loading:LoadingController) {
+  }
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -28,20 +29,11 @@ export class InterceptorService implements HttpInterceptor {
   }
 
   async handleHttpRequestStart(event: HttpEvent<any>){
-    if(event.type===0){
-      const loadingElem = await this.loading.create({
-        backdropDismiss:false,
-        spinner:'bubbles',
-        message:'Loading please wait...'
-      });
-      await loadingElem.present();
-    }
+      //start
   }
 
   handleRequestCompleted() {
-    setTimeout(async()=>{
-      this.loading.dismiss();
-    },1000)
+    //complete
   }
 
   handleHttpErrorResponse(error: HttpErrorResponse) {

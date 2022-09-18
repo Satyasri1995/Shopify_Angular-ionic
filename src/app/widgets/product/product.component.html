@@ -12,41 +12,50 @@
             <ion-row>
               <ion-label>Cost : {{product.price}}$</ion-label>
             </ion-row>
-            <ion-row *ngIf="mode!=='shop'">
+            <ion-row>
+              <ion-label>Description : {{product.description}}</ion-label>
+            </ion-row>
+            <ion-row *ngIf="mode!=='shop'&&mode!=='admin'">
               <ion-label>Quantity : {{quantity}}</ion-label>
             </ion-row>
           </ion-col>
         </ion-card-subtitle>
       </ion-col>
     </ion-row>
-    <ion-buttons>
+    <ion-row class="ion-justify-content-between">
       <!-- shop and favorites -->
-      <ion-button *ngIf="mode==='shop'||mode==='favorites'">
-        <ion-icon name="cart" slot="icon-only"></ion-icon>
+      <ion-button size="small"  fill="clear" *ngIf="mode==='shop'||mode==='favorites'" (click)="addToCart()">
+        <ion-icon name="cart" slot="start"></ion-icon>
+        <ion-label  class="ion-text-capitalize">Add to Cart</ion-label>
       </ion-button>
-      <ion-button *ngIf="mode==='shop'||mode==='favorites'">
-        <ion-icon name="heart" slot="icon-only"></ion-icon>
+      <ion-button size="small"  fill="clear" *ngIf="mode==='shop'||mode==='favorites'" (click)="addToFavorites()">
+        <ion-icon name="heart" slot="start"></ion-icon>
+        <ion-label class="ion-text-capitalize">Favorite</ion-label>
       </ion-button>
       <!-- admin -->
-      <ion-button *ngIf="mode==='admin'">
-        <ion-icon name="trash" slot="icon-only"></ion-icon>
+      <ion-button size="small"  fill="clear" *ngIf="mode==='admin'" id="updateProduct" (click)="updateProduct()">
+        <ion-icon name="create" slot="start"></ion-icon>
+        <ion-label class="ion-text-capitalize">Edit</ion-label>
       </ion-button>
-      <ion-button *ngIf="mode==='admin'">
-        <ion-icon name="create" slot="icon-only"></ion-icon>
+      <ion-button size="small"  fill="clear" *ngIf="mode==='admin'" (click)="deleteProduct()">
+        <ion-icon name="trash" slot="start"></ion-icon>
+        <ion-label class="ion-text-capitalize">Remove</ion-label>
       </ion-button>
       <!-- cart and orders -->
-      <ion-button *ngIf="mode==='cart'||mode==='orders'">
-        <ion-icon name="cube" slot="icon-only"></ion-icon>
+      <ion-button size="small"  fill="clear" *ngIf="mode==='cart'||mode==='orders'" (click)="addToOrder()">
+        <ion-icon name="cube" slot="start"></ion-icon>
+        <ion-label class="ion-text-capitalize">Order</ion-label>
       </ion-button>
-      <ion-button *ngIf="mode==='cart'||mode==='orders'">
-        <ion-icon name="close" slot="icon-only"></ion-icon>
+      <ion-button size="small" fill="clear" *ngIf="mode==='cart'||mode==='orders'" (click)="cancelOrder()">
+        <ion-icon name="close" slot="start"></ion-icon>
+        <ion-label class="ion-text-capitalize">Cancel</ion-label>
       </ion-button>
-    </ion-buttons>
+    </ion-row>
   </ion-card-content>
 </ion-card>
 
 
-<ion-modal id="productModal" #modal trigger="editProduct" class="productModal">
+<ion-modal id="productModal" #modal trigger="updateProduct" class="productModal">
   <ng-template>
     <app-update-product></app-update-product>
   </ng-template>

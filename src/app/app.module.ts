@@ -13,7 +13,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
+import { Drivers } from '@ionic/storage';
+
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +27,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     HttpClientModule,
     StoreModule.forRoot(AppReducer),
     EffectsModule.forRoot([AppEffects]),
+    IonicStorageModule.forRoot({
+      name:'shopify',
+      driverOrder:[Drivers.IndexedDB,Drivers.LocalStorage]
+    })
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

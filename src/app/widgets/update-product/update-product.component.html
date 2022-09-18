@@ -51,17 +51,16 @@
             </ion-col>
           </ion-row>
           <ion-button type="submit" [disabled]="!productForm.valid" >
-            <ion-icon slot="start" name="save"></ion-icon>
             <ion-label class="ion-text-capitalize">Save</ion-label>
           </ion-button>
         </form>
       </ion-col>
       <ion-col>
-        <ion-text color="secondary">Image Preview</ion-text>
+        <ion-text class="ionText" color="secondary">Image Preview</ion-text>
         <div id="image-container">
           <ion-img (ionError)="ionError()" (ionImgDidLoad)="ionImgDidLoad()" [src]="productForm.value.image"></ion-img>
           <div class="cover" *ngIf="imgError">
-            <ion-text color="danger">Invalid Image</ion-text>
+            <ion-text class="ionText" color="danger">Invalid Image</ion-text>
           </div>
         </div>
       </ion-col>

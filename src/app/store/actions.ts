@@ -12,7 +12,12 @@ export const SignIn = createAction(
 
 export const SignUp = createAction(
   '[auth] user signup',
-  props<{ mail: string; password: string,confirmPassword:string, isAdmin: boolean }>()
+  props<{
+    mail: string;
+    password: string;
+    confirmPassword: string;
+    isAdmin: boolean;
+  }>()
 );
 
 export const RedirectTo = createAction(
@@ -68,12 +73,12 @@ export const LoadOrder = createAction(
 
 export const AddOrder = createAction(
   '[order] creates new order',
-  props<{ userId: string; cartId: string; productId: string }>()
+  props<{ userId: string; productId: string }>()
 );
 
 export const CancelOrder = createAction(
   '[order] cancels the order',
-  props<{ userId: string; cartId: string; productId: string }>()
+  props<{ userId: string; productId: string }>()
 );
 
 export const SetOrder = createAction(
@@ -120,3 +125,9 @@ export const AddCart = createAction(
   '[cart] adds item to cart',
   props<{ userId: string; productId: string }>()
 );
+
+export const AutoLogin = createAction('[autologin] auto logins the user');
+
+export const Logout = createAction('[logout] logs out the user');
+
+export const ClearDB = createAction('[DB] clears the DB');

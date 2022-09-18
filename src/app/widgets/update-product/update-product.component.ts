@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { Product, IProduct } from 'src/app/models/product';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-update-product',
@@ -19,7 +20,7 @@ export class UpdateProductComponent implements OnInit,OnDestroy {
   @Input() mode='create';
   selectedProduct:IProduct;
   SelectProductSub:Subscription;
-  constructor(private readonly fb:FormBuilder,private readonly store:Store<AppState>) { }
+  constructor(private readonly fb:FormBuilder,private readonly store:Store<AppState>,private readonly modal:ModalController) { }
 
   ngOnInit() {
     this.productForm=this.fb.group({
@@ -59,6 +60,7 @@ export class UpdateProductComponent implements OnInit,OnDestroy {
     }else{
       this.store.dispatch(UpdateProduct({product}));
     }
+    this.modal.dismiss();
   }
 
   ngOnDestroy(): void {

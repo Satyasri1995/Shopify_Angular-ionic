@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { Store } from '@ngrx/store';
+import { Logout } from 'src/app/store/actions';
 
 @Component({
   selector: 'app-shopify',
@@ -8,7 +10,7 @@ import { AlertController } from '@ionic/angular';
 })
 export class ShopifyPage implements OnInit {
 
-  constructor(private readonly alert:AlertController) { }
+  constructor(private readonly alert:AlertController,private readonly store:Store) { }
 
   ngOnInit() {
   }
@@ -20,7 +22,9 @@ export class ShopifyPage implements OnInit {
       buttons:[
         {
           text:'Yes',
-          handler:()=>{}
+          handler:()=>{
+            this.store.dispatch(Logout());
+          }
         },
         {
           text:'No'
