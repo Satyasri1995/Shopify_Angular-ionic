@@ -73,12 +73,12 @@ export const LoadOrder = createAction(
 
 export const AddOrder = createAction(
   '[order] creates new order',
-  props<{ userId: string; productId: string }>()
+  props<{ userId: string}>()
 );
 
 export const CancelOrder = createAction(
   '[order] cancels the order',
-  props<{ userId: string; productId: string }>()
+  props<{ userId: string;orderId:string }>()
 );
 
 export const SetOrder = createAction(
@@ -118,12 +118,12 @@ export const SetCart = createAction(
 
 export const RemoveFromCart = createAction(
   '[cart] removes item from cart',
-  props<{ userId: string; productId: string }>()
+  props<{ userId: string;cartId:string; productId: string }>()
 );
 
 export const AddCart = createAction(
   '[cart] adds item to cart',
-  props<{ userId: string; productId: string }>()
+  props<{ userId: string;cartId:string; productId: string }>()
 );
 
 export const AutoLogin = createAction('[autologin] auto logins the user');

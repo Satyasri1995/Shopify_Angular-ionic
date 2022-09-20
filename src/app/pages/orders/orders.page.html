@@ -2,10 +2,18 @@
   <ion-row class="ion-align-items-center head primary">
     <ion-title>Ordered Products</ion-title>
   </ion-row>
-  <ion-row class="ion-padding">
-    <app-product *ngFor="let orderitem of (order|async).products"
-    [quantity]="orderitem.quantity" [product]="orderitem.product"
-     mode="orders">
-    </app-product>
+  <ion-row *ngIf="order.orders.length" class="ion-padding ion-justify-content-center">
+    <ion-col sizeMd="8" sizeSm="12">
+      <ion-row *ngFor="let order of order.orders">
+        <app-orders-item [order]="order" style="width: 100%;"></app-orders-item>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="order.orders.length==0" class="ion-justify-content-center ion-align-items-center emptyHeight">
+    <ion-label>You dont have any orders to show </ion-label>
+    <ion-button size="large" fill="clear" routerLink="/shopify/shop">
+      <ion-icon name="cart" slot="start"></ion-icon>
+    <ion-label class="ion-text-capitalize">Shop</ion-label>
+    </ion-button>
   </ion-row>
 </ion-content>

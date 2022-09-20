@@ -9,9 +9,8 @@ export class ErrorHandlerService implements ErrorHandler {
 
   constructor(private readonly store:Store) { }
   handleError(error: any): void {
-    console.log(error)
     if(error.error){
-      this.store.dispatch(Toast({header:error.error,message:error.message.join(" , "),severity:'danger'}));
+      this.store.dispatch(Toast({header:error.error,message:Array.isArray(error.message)?error.message.join(" , "):error.message,severity:'danger'}));
     }else{
       this.store.dispatch(Toast({header:'Oops!',message:'Something went wrong',severity:'danger'}));
     }

@@ -80,6 +80,12 @@ ion-modal.productModal h1 {
   margin: 20px 20px 10px 20px;
 }
 
+ion-label{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 ion-modal.productModal ion-icon {
   margin-right: 6px;
 
@@ -93,4 +99,12 @@ ion-modal.productModal ion-icon {
 
 ion-modal.productModal .wrapper {
   margin-bottom: 10px;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.fh{
+  height: -webkit-fill-available !important;
 }

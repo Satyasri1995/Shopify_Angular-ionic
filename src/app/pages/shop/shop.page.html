@@ -1,7 +1,7 @@
 <ion-content>
   <ion-row class="ion-align-items-center ion-justify-content-between head primary">
     <ion-title>Shopping Products</ion-title>
-    <ion-buttons class="ion-padding-end">
+    <ion-buttons *ngIf="isAdmin$|async" class="ion-padding-end">
       <ion-button id="addProduct" (click)="createProduct()">
         <ion-icon slot="start" name="add"></ion-icon>
         <ion-label class="ion-text-capitalize">Add Product</ion-label>
@@ -9,7 +9,6 @@
     </ion-buttons>
   </ion-row>
   <ion-row class="ion-padding">
-    <!-- <app-product *ngFor="let product of products$|async" [product]="product" mode="admin"></app-product> -->
     <app-product *ngFor="let product of products$|async" [product]="product" [mode]="(isAdmin$|async)?'admin':'shop'"></app-product>
   </ion-row>
 </ion-content>

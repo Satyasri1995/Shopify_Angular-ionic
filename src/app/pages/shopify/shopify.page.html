@@ -2,15 +2,17 @@
   <ion-toolbar color="primary">
     <ion-title routerLink="/shopify/shop" size="large">Shopify</ion-title>
     <ion-buttons slot="end">
-      <ion-button routerLink="/shopify/favorites">
+      <ion-button routerLink="/shopify/favorites" *ngIf="(isAdmin$|async)===false">
         <ion-icon slot="start" name="heart"></ion-icon>
-        <ion-label class="ion-text-capitalize">Favorites</ion-label>
+        <ion-label class="ion-text-capitalize">Favorites</ion-label>&nbsp;
+        <ion-badge color="success" *ngIf="(favoriteItemCount$|async)>0">{{favoriteItemCount$|async}}</ion-badge>
       </ion-button>
-      <ion-button routerLink="/shopify/cart">
+      <ion-button routerLink="/shopify/cart" *ngIf="(isAdmin$|async)===false">
         <ion-icon slot="start" name="cart"></ion-icon>
-        <ion-label class="ion-text-capitalize">Cart</ion-label>
+        <ion-label class="ion-text-capitalize">Cart</ion-label>&nbsp;
+        <ion-badge color="success" *ngIf="(cartItemCount$|async)>0">{{cartItemCount$|async}}</ion-badge>
       </ion-button>
-      <ion-button routerLink="/shopify/orders">
+      <ion-button routerLink="/shopify/orders" *ngIf="(isAdmin$|async)===false">
         <ion-icon slot="start" name="bag"></ion-icon>
         <ion-label class="ion-text-capitalize">Orders</ion-label>
       </ion-button>

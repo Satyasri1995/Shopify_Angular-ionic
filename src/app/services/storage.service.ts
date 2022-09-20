@@ -21,7 +21,6 @@ export class StorageService {
   }
 
   public async clear(){
-    await this.storage?.set('user',null);
     await this.storage?.clear();
   }
 

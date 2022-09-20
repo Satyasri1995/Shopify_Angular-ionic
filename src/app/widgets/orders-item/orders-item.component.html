@@ -1,0 +1,44 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title color="primary">Order ID : {{order?.id}}</ion-card-title>
+    <ion-card-subtitle color="secondary">Total Order price for the following items : {{order?.price}}$</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <ion-item *ngFor="let item of order.items">
+        <img slot="start" [src]="item.product.image"/>
+        <ion-col>
+          <ion-row>
+            <ion-card-title>{{item.product.name}}</ion-card-title>
+          </ion-row>
+          <ion-row>
+           <ion-card-subtitle>
+            Description : {{item.product.description}}
+           </ion-card-subtitle>
+          </ion-row>
+          <ion-row>
+            <ion-card-subtitle>
+             Cost Price : {{item.product.price}}$
+            </ion-card-subtitle>
+           </ion-row>
+           <ion-row>
+            <ion-card-subtitle>
+             Quantity : {{item.quantity}}
+            </ion-card-subtitle>
+           </ion-row>
+           <ion-row>
+            <ion-card-subtitle>
+             Total Cost : {{item.product.price}}$ * {{item.quantity}} = {{item.product.price*item.quantity}}
+            </ion-card-subtitle>
+           </ion-row>
+        </ion-col>
+      </ion-item>
+    </ion-list>
+    <ion-row class="ion-justify-content-end">
+      <ion-button fill="clear" size="small" (click)="cancelOrder()">
+        <ion-icon name="close" slot="start"></ion-icon>
+        <ion-label class="ion-text-capitalize">Cancel Order</ion-label>
+      </ion-button>
+    </ion-row>
+  </ion-card-content>
+</ion-card>

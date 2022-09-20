@@ -1,3 +1,4 @@
+import { OrdersItemComponent } from './../../widgets/orders-item/orders-item.component';
 import { ProductModule } from './../../shared/product/product.module';
 import { ProductComponent } from './../../widgets/product/product.component';
 import { NgModule } from '@angular/core';
@@ -18,6 +19,6 @@ import { OrdersPage } from './orders.page';
     OrdersPageRoutingModule,
     ProductModule
   ],
-  declarations: [OrdersPage]
+  declarations: [OrdersPage,OrdersItemComponent]
 })
 export class OrdersPageModule {}

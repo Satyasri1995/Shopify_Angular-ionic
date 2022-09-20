@@ -60,7 +60,7 @@ export class AppEffects {
           mergeMap((response: any) => {
             return [
               Toast({
-                header: 'SignUp',
+                header: 'Status',
                 message: response.data,
                 severity: 'success',
               }),
@@ -137,7 +137,7 @@ export class AppEffects {
   loadProducts$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(LoadProducts),
-      switchMap((payload) => {
+      switchMap((_) => {
         return this.http.get(environment.api + 'product/fetchAll').pipe(
           mergeMap((response: any) => {
             const products = response.data.map((pro) => new Product(pro));
@@ -158,7 +158,7 @@ export class AppEffects {
             mergeMap((response: any) => {
               return [
                 Toast({
-                  header: 'Update',
+                  header: 'Status',
                   message: response.data,
                   severity: 'success',
                 }),
@@ -180,7 +180,7 @@ export class AppEffects {
             mergeMap((response: any) => {
               return [
                 Toast({
-                  header: 'create',
+                  header: 'Status',
                   message: response.data,
                   severity: 'success',
                 }),
@@ -202,7 +202,7 @@ export class AppEffects {
             mergeMap((response: any) => {
               return [
                 Toast({
-                  header: 'Delete',
+                  header: 'Status',
                   message: response.data,
                   severity: 'success',
                 }),
@@ -221,19 +221,18 @@ export class AppEffects {
     return this.actions$.pipe(
       ofType(AddOrder),
       switchMap((payload) => {
-        const user = payload.userId;
-        const product = payload.productId;
         return this.http
-          .post(environment.api + 'orders/add', { user, product })
+          .get(environment.api + `orders/add/${payload.userId}`)
           .pipe(
             mergeMap((response: any) => {
               return [
                 Toast({
-                  header: 'Order',
+                  header: 'Status',
                   message: response.data,
                   severity: 'success',
                 }),
                 LoadOrder({ userId: payload.userId }),
+                LoadCart({userId:payload.userId})
               ];
             })
           );
@@ -264,14 +263,14 @@ export class AppEffects {
       ofType(CancelOrder),
       switchMap((payload) => {
         const user = payload.userId;
-        const product = payload.productId;
+        const order = payload.orderId;
         return this.http
-          .post(environment.api + 'orders/remove', { user, product })
+          .post(environment.api + 'orders/remove', { user, order })
           .pipe(
             mergeMap((response: any) => {
               return [
                 Toast({
-                  header: 'Order',
+                  header: 'Status',
                   message: response.data,
                   severity: 'success',
                 }),
@@ -314,7 +313,7 @@ export class AppEffects {
             mergeMap((response: any) => {
               return [
                 Toast({
-                  header: 'favorite',
+                  header: 'Status',
                   message: response.data,
                   severity: 'success',
                 }),
@@ -338,7 +337,7 @@ export class AppEffects {
             mergeMap((response: any) => {
               return [
                 Toast({
-                  header: 'favorite',
+                  header: 'Status',
                   message: response.data,
                   severity: 'success',
                 }),
@@ -375,13 +374,14 @@ export class AppEffects {
       switchMap((payload) => {
         const user = payload.userId;
         const product = payload.productId;
+        const cart = payload.cartId;
         return this.http
-          .post(environment.api + 'cart/add', { user, product })
+          .post(environment.api + 'cart/add', { user, product, cart })
           .pipe(
             mergeMap((response: any) => {
               return [
                 Toast({
-                  header: 'cart',
+                  header: 'Status',
                   message: response.data,
                   severity: 'success',
                 }),
@@ -399,13 +399,14 @@ export class AppEffects {
       switchMap((payload) => {
         const user = payload.userId;
         const product = payload.productId;
+        const cart = payload.cartId;
         return this.http
-          .post(environment.api + 'cart/remove', { user, product })
+          .post(environment.api + 'cart/remove', { user, product, cart })
           .pipe(
             mergeMap((response: any) => {
               return [
                 Toast({
-                  header: 'favorite',
+                  header: 'Status',
                   message: response.data,
                   severity: 'success',
                 }),

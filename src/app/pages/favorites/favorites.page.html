@@ -2,10 +2,17 @@
   <ion-row class="ion-align-items-center head primary">
     <ion-title>Favorite Products</ion-title>
   </ion-row>
-  <ion-row class="ion-padding">
-    <app-product *ngFor="let favoriteitem of (favorite|async).products"
-    [product]="favoriteitem.product"
+  <ion-row *ngIf="favorite.products.length" class="ion-padding">
+    <app-product *ngFor="let product of favorite.products"
+    [product]="product"
      mode="favorites">
     </app-product>
+  </ion-row>
+  <ion-row *ngIf="favorite.products.length==0" class="ion-justify-content-center ion-align-items-center emptyHeight">
+    <ion-label>Looks like your Favorites are empty, Add some items to your favorites first to proceed...</ion-label>
+    <ion-button size="large" fill="clear" routerLink="/shopify/shop">
+      <ion-icon name="cart" slot="start"></ion-icon>
+    <ion-label class="ion-text-capitalize">Shop</ion-label>
+    </ion-button>
   </ion-row>
 </ion-content>

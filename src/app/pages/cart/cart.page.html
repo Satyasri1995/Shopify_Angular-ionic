@@ -1,11 +1,24 @@
 <ion-content>
-  <ion-row class="ion-align-items-center head primary">
-    <ion-title>Shopping Cart</ion-title>
+  <ion-row class="ion-align-items-center ion-justify-content-between head primary">
+    <ion-title>Your Cart</ion-title>
+    <ion-buttons *ngIf="cart.products.length" class="ion-padding-end">
+      <ion-button id="addProduct" (click)="placeOrder()">
+        <ion-icon slot="start" name="cube"></ion-icon>
+        <ion-label class="ion-text-capitalize">Place Order</ion-label>
+      </ion-button>
+    </ion-buttons>
   </ion-row>
-  <ion-row class="ion-padding">
-    <app-product *ngFor="let cartitem of (cart|async).products"
-    [quantity]="cartitem.quantity"
+  <ion-row *ngIf="cart.products.length" class="ion-padding">
+    <app-product *ngFor="let cartitem of cart.products"
+    [quantity]="cartitem.quantity" [product]="cartitem.product"
      mode="cart">
     </app-product>
+  </ion-row>
+  <ion-row *ngIf="cart.products.length==0" class="ion-justify-content-center ion-align-items-center emptyHeight">
+    <ion-label>Looks like your cart is empty, Add some items to your cart first to proceed...</ion-label>
+    <ion-button size="large" fill="clear" routerLink="/shopify/shop">
+      <ion-icon name="cart" slot="start"></ion-icon>
+    <ion-label class="ion-text-capitalize">Shop</ion-label>
+    </ion-button>
   </ion-row>
 </ion-content>

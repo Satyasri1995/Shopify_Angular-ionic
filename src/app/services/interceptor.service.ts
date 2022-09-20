@@ -38,7 +38,7 @@ export class InterceptorService implements HttpInterceptor {
 
   handleHttpErrorResponse(error: HttpErrorResponse) {
     const data=error.error;
-    console.log(error);
+    console.log(error)
     this.handleRequestCompleted();
     return throwError({ ...data });
   }

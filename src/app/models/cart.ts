@@ -3,7 +3,6 @@ import { IProduct } from './product';
 export interface ICart{
   id:string;
   products:{
-    id:string,
     product:IProduct,
     quantity:number
   }[],
@@ -14,7 +13,6 @@ export interface ICart{
 export class Cart implements ICart{
   id:string;
   products:{
-    id:string,
     product:IProduct,
     quantity:number
   }[];

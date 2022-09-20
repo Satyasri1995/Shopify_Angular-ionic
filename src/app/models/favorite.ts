@@ -1,20 +1,14 @@
 import { IProduct } from './product';
 export interface IFavorite{
   id:string;
-  products:{
-    id:string,
-    product:IProduct,
-  }[];
+  products:IProduct[];
   createdAt:Date;
   updatedAt:Date;
 }
 
 export class Favorite implements IFavorite{
   id:string;
-  products:{
-    id:string,
-    product:IProduct,
-  }[];
+  products:IProduct[];
   createdAt:Date;
   updatedAt:Date;
   constructor(data?:IFavorite){

@@ -1,8 +1,9 @@
+import { UpdateProductComponent } from './../update-product/update-product.component';
 import { AppState } from 'src/app/store/reducer';
-import { UserIdSelector } from './../../store/selectors';
+import { UserIdSelector, CartIdSelector } from './../../store/selectors';
 import { Subscription } from 'rxjs';
-import { AlertController } from '@ionic/angular';
-import { DeleteProduct, SelectProduct, AddCart, AddFavorite, AddOrder, CancelOrder } from './../../store/actions';
+import { AlertController, ModalController } from '@ionic/angular';
+import { DeleteProduct, SelectProduct, AddCart, AddFavorite, AddOrder, CancelOrder, RemoveFromFavorite, RemoveFromCart } from './../../store/actions';
 import { Store } from '@ngrx/store';
 import { IProduct, Product } from 'src/app/models/product';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
@@ -17,12 +18,14 @@ export class ProductComponent implements OnInit, OnDestroy {
   @Input() product: IProduct;
   @Input() quantity: number;
   UserIdSub: Subscription;
+  cartIdSub:Subscription;
   userId: string;
+  cartId:string;
   constructor(
     private readonly store: Store<AppState>,
-    private readonly alert: AlertController
+    private readonly alert: AlertController,
+    private readonly modal:ModalController
   ) {
-    this.product = new Product();
   }
 
   ngOnInit() {
@@ -31,6 +34,9 @@ export class ProductComponent implements OnInit, OnDestroy {
       .subscribe((userId: string) => {
         this.userId = userId;
       });
+    this.cartIdSub = this.store.select(state=>CartIdSelector(state)).subscribe((cartId:string)=>{
+      this.cartId=cartId;
+    })
   }
 
   async deleteProduct() {
@@ -52,23 +58,39 @@ export class ProductComponent implements OnInit, OnDestroy {
     await alertElem.present();
   }
 
-  updateProduct() {
+  async updateProduct() {
     this.store.dispatch(SelectProduct({ product: this.product }));
+    const modelElem = await this.modal.create({
+      component:UpdateProductComponent,
+      canDismiss:true,
+      backdropDismiss:true,
+      cssClass:'productModal'
+    });
+    modelElem.present();
   }
 
-  addToOrder(){
-    this.store.dispatch(AddOrder({userId:this.userId,productId:this.product.id}));
+
+
+
+
+  addToCart(){
+    this.store.dispatch(AddCart({userId:this.userId,cartId:this.cartId,productId:this.product.id}));
   }
 
-  async cancelOrder(){
+  addToCartFromFavorites(){
+    this.store.dispatch(AddCart({userId:this.userId,cartId:this.cartId,productId:this.product.id}));
+    this.store.dispatch(RemoveFromFavorite({userId:this.userId,productId:this.product.id}))
+  }
+
+  async removeFromCart(){
     const alertElem = await this.alert.create({
-      header:'Cancellation',
-      message:'Are you sure want to cancel the Order ?',
+      header:'Confirmation',
+      message:`Are you sure ? Do you want to remove ${this.product.name} from cart ?`,
       buttons:[
         {
           text:'Yes',
           handler:()=>{
-            this.store.dispatch(CancelOrder({userId:this.userId,productId:this.product.id}));
+            this.store.dispatch(RemoveFromCart({userId:this.userId,cartId:this.cartId,productId:this.product.id}));
           }
         },
         {
@@ -79,15 +101,16 @@ export class ProductComponent implements OnInit, OnDestroy {
     await alertElem.present();
   }
 
-  addToCart(){
-    this.store.dispatch(AddCart({userId:this.userId,productId:this.product.id}));
-  }
-
   addToFavorites(){
     this.store.dispatch(AddFavorite({userId:this.userId,productId:this.product.id}));
   }
 
+  removeFromFavorites(){
+    this.store.dispatch(RemoveFromFavorite({userId:this.userId,productId:this.product.id}))
+  }
+
   ngOnDestroy(): void {
     this.UserIdSub?.unsubscribe();
+    this.cartIdSub?.unsubscribe();
   }
 }
