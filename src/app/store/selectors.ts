@@ -60,3 +60,8 @@ export const FavoriteProductsSelector = createSelector(
   FavoriteStateSelector,
   (state: IFavorite) => state.products
 );
+
+export const JwtSelector = createSelector(
+  ShopSelector,
+  (state: ShopState) => state.jwt
+);

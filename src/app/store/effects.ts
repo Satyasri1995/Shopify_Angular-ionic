@@ -29,6 +29,8 @@ import {
   AutoLogin,
   Logout,
   ClearDB,
+  SetJwToken,
+  LoadJWT,
 } from './actions';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
@@ -79,9 +81,10 @@ export class AppEffects {
       ofType(SignIn),
       switchMap((payload) => {
         return this.http.post(environment.api + 'user/signin', payload).pipe(
-          mergeMap((payload: any) => {
+          mergeMap((response: any) => {
             return [
-              SetUser({ user: new User(payload.data) }),
+              SetUser({ user: new User(response.data.user) }),
+              SetJwToken({ jwt: response.data.jwToken }),
               RedirectTo({ page: '/shopify' }),
             ];
           })
@@ -232,7 +235,7 @@ export class AppEffects {
                   severity: 'success',
                 }),
                 LoadOrder({ userId: payload.userId }),
-                LoadCart({userId:payload.userId})
+                LoadCart({ userId: payload.userId }),
               ];
             })
           );
@@ -446,6 +449,32 @@ export class AppEffects {
     },
     { dispatch: false }
   );
+
+  storeJwt$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(SetJwToken),
+        tap((payload) => {
+          const jwt = payload.jwt;
+          this.storage.set('jwt', jwt);
+        })
+      );
+    },
+    { dispatch: false }
+  );
+
+  loadJWT$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(LoadJWT),
+      switchMap(() => {
+        return from(this.storage.get('jwt')).pipe(
+          mergeMap((jwt) => {
+            return [SetJwToken({ jwt })];
+          })
+        );
+      })
+    );
+  });
 
   clearDB$ = createEffect(
     () => {

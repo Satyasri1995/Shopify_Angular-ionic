@@ -131,3 +131,10 @@ export const AutoLogin = createAction('[autologin] auto logins the user');
 export const Logout = createAction('[logout] logs out the user');
 
 export const ClearDB = createAction('[DB] clears the DB');
+
+export const SetJwToken = createAction(
+  '[jwt] sets the jwtoken',
+  props<{jwt:string}>()
+);
+
+export const LoadJWT = createAction('[jwt] loads the jwt')

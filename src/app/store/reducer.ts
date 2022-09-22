@@ -4,11 +4,12 @@ import { IOrder, Order } from './../models/order';
 import { ActionReducerMap, createReducer, on } from '@ngrx/store';
 import { Cart, ICart } from '../models/cart';
 import { User } from '../models/user';
-import { SetUser, SetProducts, SelectProduct, ClearProduct, SetOrder, SetCart, SetFavorite } from './actions';
+import { SetUser, SetProducts, SelectProduct, ClearProduct, SetOrder, SetCart, SetFavorite, SetJwToken } from './actions';
 import { IProduct, Product } from '../models/product';
 
 const initialState = {
   user: new User(),
+  jwt:'',
   products: [],
   selectedProduct: new Product(),
   cart: new Cart(),
@@ -20,6 +21,7 @@ const initialState = {
 
 export interface ShopState {
   user: IUser;
+  jwt:string;
   products: IProduct[];
   selectedProduct: IProduct;
   cart: ICart;
@@ -69,6 +71,12 @@ export const ShopReducer = createReducer(
     return {
       ...state,
       favorite:payload.favorite
+    }
+  }),
+  on(SetJwToken,(state,payload)=>{
+    return {
+      ...state,
+      jwt:payload.jwt
     }
   })
 );

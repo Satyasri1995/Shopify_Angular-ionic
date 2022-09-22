@@ -1,3 +1,4 @@
+import { JwtSelector } from './../store/selectors';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
 import {
   HttpErrorResponse,
@@ -9,28 +10,37 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { LoadingController } from '@ionic/angular';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/reducer';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InterceptorService implements HttpInterceptor {
-  constructor(private readonly loading:LoadingController) {
+  jwt:string
+  constructor(private readonly loading:LoadingController,private readonly store:Store<AppState>) {
+    this.store.select(state=>JwtSelector(state)).subscribe((jwt:string)=>{
+      this.jwt=jwt
+    })
   }
+
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    req = req.clone({
+      setHeaders: {
+         Authorization: `Bearer ${this.jwt}`
+      }
+  });
     return next.handle(req).pipe(
-      tap((event: HttpEvent<any>) => this.handleHttpRequestStart(event)),
       map((event: HttpEvent<any>) => this.handleHttpResponse(event)),
       catchError((error) => this.handleHttpErrorResponse(error)),
       finalize(() => this.handleRequestCompleted())
     );
   }
 
-  async handleHttpRequestStart(event: HttpEvent<any>){
-      //start
-  }
+
 
   handleRequestCompleted() {
     //complete
